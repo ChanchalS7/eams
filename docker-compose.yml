@@ -1,0 +1,10 @@
+version: '3'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: eams
+      POSTGRES_USER: eams
+      POSTGRES_PASSWORD: eams
+    ports:
+      - "5432:5432"
