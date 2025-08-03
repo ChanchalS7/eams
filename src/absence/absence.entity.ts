@@ -9,16 +9,22 @@ export enum AbsenceStatus {
 
 @Entity()
 export class AbsenceRequest {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
-  @ManyToOne(() => User, { eager: true }) employee: User;
+  @ManyToOne(() => User, { eager: true })
+  employee!: User;
 
-  @Column() startDate: Date;
-  @Column() endDate: Date;
-  @Column() reason: string;
+  @Column('date')
+  startDate!: Date;
+  @Column('date')
+  endDate!: Date;
+  @Column()
+  reason!: string;
 
-  @Column({ type: 'enum', enum: AbsenceStatus, default: AbsenceStatus.PENDING })
-  status: AbsenceStatus;
+  @Column({ type: 'varchar', enum: AbsenceStatus, default: AbsenceStatus.PENDING })
+  status!: AbsenceStatus;
 
-  @CreateDateColumn() createdAt: Date;
+  @CreateDateColumn()
+  createdAt!: Date;
 }

@@ -1,3 +1,12 @@
+import { Controller, Get, Post, Patch, Body, Param, Req, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../user/user.entity';
+import { AbsenceStatus } from './absence.entity';
+import { AbsenceService } from './absence.service';
+import { CreateAbsenceDto } from './dto/create-absence.dto';
+
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('absences')
 export class AbsenceController {
@@ -8,7 +17,7 @@ export class AbsenceController {
 
   @Post()
   @Roles(Role.EMPLOYEE)
-  create(@Req() req, @Body() dto: CreateAbsenceDto) {
+  create(@Req() req: { user: { userId: string } }, @Body() dto: CreateAbsenceDto) {
     return this.service.create(req.user.userId, dto);
   }
 

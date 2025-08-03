@@ -7,11 +7,15 @@ export enum Role {
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
-  @Column() name: string;
+  @Column()
+  name!: string;
 
-  @Column({ unique: true }) email: string;
+  @Column({ unique: true })
+  email!: string;
 
-  @Column({ type: 'enum', enum: Role }) role: Role;
+  @Column({ type: 'varchar', enum: Role })
+  role!: Role;
 }
