@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Body, Param, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Body, Param, Req, UseGuards, Query } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -13,7 +13,12 @@ export class AbsenceController {
   constructor(private readonly service: AbsenceService) {}
 
   @Get()
-  getAll() { return this.service.findAll(); }
+  getAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.service.findAll(page, limit);
+  }
 
   @Post()
   @Roles(Role.EMPLOYEE)

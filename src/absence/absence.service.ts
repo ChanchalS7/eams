@@ -14,10 +14,15 @@ export class AbsenceService {
     private userRepo: Repository<User>,
   ) {}
 
-  async findAll(): Promise<AbsenceRequest[]> {
-    return this.absenceRepo.find({
+  async findAll(page: number = 1, limit: number = 10): Promise<{ data: AbsenceRequest[], total: number, page: number, lastPage: number }> {
+    const skip = (page - 1) * limit;
+    const [data, total] = await this.absenceRepo.findAndCount({
       relations: ['employee'],
+      skip: skip,
+      take: limit,
     });
+    const lastPage = Math.ceil(total / limit);
+    return { data, total, page, lastPage };
   }
 
   async create(userId: string, dto: CreateAbsenceDto): Promise<AbsenceRequest> {
